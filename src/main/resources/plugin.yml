@@ -1,0 +1,6 @@
+name: Trust
+version: @version@
+main: me.tererun.plugin.trust.Trust
+api-version: 1.16
+authors: [ tererun ]
+description: Trust
