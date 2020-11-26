@@ -120,7 +120,7 @@ public class DatabaseController {
         if (uuid == null) {
             sql = "SELECT COUNT(*) FROM " + tableName;
         } else {
-            sql = "SELECT COUNT(*) FROM " + tableName + " WHERE uuid = '" + uuid + "'";
+            sql = "SELECT COUNT(uuid) FROM " + tableName + " WHERE uuid = '" + uuid + "'";
         }
         int i = 0;
         try {
@@ -147,7 +147,7 @@ public class DatabaseController {
     public void addData(String tableName, UserTrust userTrust) {
         String uuid = userTrust.getUser().toString();
         double score = userTrust.getPoint();
-        String sql = "INSERT OR REPLACE INTO " + tableName + " (uuid, score) VALUES('" + uuid + "', '" + score + "')";
+        String sql = "INSERT OR REPLACE INTO " + tableName + " (uuid, score) VALUES('" + uuid + "', " + score + ")";
 
         try {
             connection = DriverManager.getConnection(url);
@@ -184,7 +184,7 @@ public class DatabaseController {
     public void insertData(String tableName, UserTrust userTrust) {
         String uuid = userTrust.getUser().toString();
         double score = userTrust.getPoint();
-        String sql = "INSERT INTO " + tableName + " (uuid, score) VALUES('" + uuid + "', '" + score + "')";
+        String sql = "INSERT INTO " + tableName + " (uuid, score) VALUES('" + uuid + "', " + score + ")";
 
         try {
             connection = DriverManager.getConnection(url);
@@ -212,7 +212,7 @@ public class DatabaseController {
         String uuid = userTrust.getUser().toString();
         double score = userTrust.getPoint();
         try {
-            String sql = "UPDATE " + tableName + " SET score = '" + score + "' WHERE uuid = '" + uuid + "'";
+            String sql = "UPDATE " + tableName + " SET score = " + score + " WHERE uuid = '" + uuid + "'";
             connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);

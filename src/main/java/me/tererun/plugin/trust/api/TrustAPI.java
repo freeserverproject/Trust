@@ -14,6 +14,9 @@ public class TrustAPI {
     }
 
     public UserTrust getUserTrust(UUID uuid) {
+        if (Trust.getDatabaseController().getCount("trust", uuid.toString()) == 0) {
+            Trust.getDatabaseController().addData("trust", new UserTrust(uuid, Trust.defaultScore));
+        }
         return Trust.getDatabaseController().loadData("trust", uuid.toString());
     }
 
