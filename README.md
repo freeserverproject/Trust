@@ -6,7 +6,7 @@
 # How to use
 ### Example
 ```java
-private TrustAPI trustAPI;
+private static TrustAPI trustAPI;
 
 @Override
 public void onEnable() {
@@ -14,7 +14,7 @@ public void onEnable() {
     trustAPI = trust.getTrustAPI();
 }
 
-public TrustAPI getTrustAPI() {
+public static TrustAPI getTrustAPI() {
     return trustAPI;
 }
 ```
