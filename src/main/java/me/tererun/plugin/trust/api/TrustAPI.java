@@ -4,6 +4,7 @@ import me.tererun.plugin.trust.Trust;
 import me.tererun.plugin.trust.event.UserTrustChangeEvent;
 import me.tererun.plugin.trust.trust.UserTrust;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +23,12 @@ public class TrustAPI {
 
     public void setPoint(UUID uuid, double point, String reason) {
         UserTrustChangeEvent userTrustChangeEvent = new UserTrustChangeEvent(uuid, point, reason);
-        Bukkit.getServer().getPluginManager().callEvent(userTrustChangeEvent);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.getServer().getPluginManager().callEvent(userTrustChangeEvent);
+            }
+        }.runTask(Trust.getPlugin());
         if (userTrustChangeEvent.isCancelled()) return;
         UserTrust userTrust = this.getUserTrust(uuid);
         userTrust.setPoint(userTrustChangeEvent.getPoint());
@@ -33,7 +39,12 @@ public class TrustAPI {
         UserTrust userTrust = this.getUserTrust(uuid);
         double resultPoint = userTrust.getPoint() + point;
         UserTrustChangeEvent userTrustChangeEvent = new UserTrustChangeEvent(uuid, resultPoint, reason);
-        Bukkit.getServer().getPluginManager().callEvent(userTrustChangeEvent);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.getServer().getPluginManager().callEvent(userTrustChangeEvent);
+            }
+        }.runTask(Trust.getPlugin());
         if (userTrustChangeEvent.isCancelled()) return;
         userTrust.setPoint(userTrustChangeEvent.getPoint());
         Trust.getDatabaseController().addData("trust", userTrust);
